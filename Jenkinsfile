@@ -84,8 +84,13 @@ dotnet test SeleniumIde.sln --logger "trx;LogFileName=TestResults.trx"
 
     post {
         always {
-            archiveArtifacts artifacts: '**/TestResults/*.trx', allowEmptyArchive: true
-            junit '**/TestResults/*.trx'
+            // Keep all test result files as build artifacts
+            archiveArtifacts artifacts: '**/TestResults/*.*', allowEmptyArchive: true
+
+            // Note for students:
+            // JUnit plugin expects JUnit-style XML, not .trx.
+            // In a real project we would convert TRX to JUnit XML
+            // or use a compatible logger, then call 'junit' here.
         }
     }
 }
